@@ -4,21 +4,18 @@
       {{ id }}
     </div>
     <div class="lever__label" v-if="typeof label == 'object'">
-      <span v-for="labelPart in label">
-        {{ labelPart}}
-    </span>
+      <span v-for="(labelPart, index) in label" :key="index">
+        {{ labelPart }}
+      </span>
     </div>
     <div class="lever__label" v-else>
-        {{label}}
+      {{ label }}
     </div>
     <div class="lever__unlocked-by">
-      <span
-        v-for="(state, index) in unlockedBy"
-        :key="index"
-        :data-state="state == 1"
-      >
-        {{ index }}
-      </span>
+      {{ unlockedByList.join(", ") }}
+    </div>
+    <div class="lever__locked-by">
+      {{ lockedByList.join(", ") }}
     </div>
     <div class="lever__switch">
       <input
@@ -53,6 +50,27 @@ export default {
   methods: {
     changeState() {
       this.$emit("changeState", { id: this.id, newState: this.state == 1 });
+    },
+  },
+
+  computed: {
+    unlockedByList() {
+      const locks = [];
+      for (const id in this.unlockedBy) {
+        if (this.unlockedBy[id]) {
+          locks.push(id);
+        }
+      }
+      return locks;
+    },
+    lockedByList() {
+      const locks = [];
+      for (const id in this.unlockedBy) {
+        if (!this.unlockedBy[id]) {
+          locks.push(id);
+        }
+      }
+      return locks;
     },
   },
 };
@@ -95,21 +113,32 @@ export default {
     font-size: 0.8rem;
 
     span {
-        display: block;
+      display: block;
     }
 
     span + span {
-        border-top: 1px solid white;
-        margin-top: 0.5rem;
-        padding-top: 0.5rem;
+      border-top: 1px solid white;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
     }
   }
 
-  &__locked-by::before {
-    content: 'Put back'
+  &__unlocked-by {
+    margin-top: 1rem;
   }
 
-  &__unlocked-by {
+  &__locked-by {
+    &::before {
+      content: "Put back";
+      font-size: 0.6rem;
+      width: 100%;
+      border-top: 1px solid rgb(255 255 255 / 0.5);
+      padding-top: 1rem;
+    }
+  }
+
+  &__unlocked-by,
+  &__locked-by {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

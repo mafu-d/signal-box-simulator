@@ -18,7 +18,7 @@
 
 <script>
 import Lever from "./components/Lever.vue";
-import Diagram from './diagram.svg';
+import Diagram from "./diagram.svg";
 
 export default {
   components: {
@@ -28,7 +28,6 @@ export default {
 
   methods: {
     stateChanged({ id, newState }) {
-      console.log(`Lever ${id} is now ${newState}`);
       this.levers.find((lever) => lever.id === id).state = newState;
       this.setLockState();
     },
@@ -38,7 +37,6 @@ export default {
         lever.unlocked = true;
         if (!lever.unlockedBy) return;
         for (const conditionId in lever.unlockedBy) {
-          // console.log({conditionId, lever: this.levers.find(conditionLever => conditionLever.id == conditionId)})
           if (
             this.levers.find(
               (conditionLever) => conditionLever.id == conditionId
@@ -81,7 +79,7 @@ export default {
           state: 0,
           label: "Up Adv Start",
           type: "signal",
-          unlockedBy: {17: 0}
+          unlockedBy: { 17: 0 },
         },
         {
           id: 4,
@@ -105,7 +103,7 @@ export default {
           state: 0,
           label: "FPL for 5",
           type: "fpl",
-          unlockedBy: {12: 0, 16: 0}
+          unlockedBy: { 12: 0, 16: 0 },
         },
         {
           id: 7,
@@ -129,7 +127,7 @@ export default {
           state: 0,
           label: "FPL for 8",
           type: "fpl",
-          unlockedBy: {15: 0}
+          unlockedBy: { 15: 0 },
         },
         {
           id: 10,
@@ -137,7 +135,7 @@ export default {
           state: 0,
           label: "FPL for 13B",
           type: "fpl",
-          unlockedBy: {1: 0, 4: 0}
+          unlockedBy: { 1: 0, 4: 0 },
         },
         {
           id: 11,
@@ -169,7 +167,7 @@ export default {
           state: 0,
           label: "FPL for 13A",
           type: "fpl",
-          unlockedBy: {15: 0, 16: 0}
+          unlockedBy: { 15: 0, 16: 0 },
         },
         {
           id: 15,
@@ -193,7 +191,7 @@ export default {
           state: 0,
           label: "Down Main Home",
           type: "signal",
-          unlockedBy: {3: 0, 2: 0, 7: 0}
+          unlockedBy: { 3: 0, 2: 0, 7: 0 },
         },
       ],
     };
