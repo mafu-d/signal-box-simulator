@@ -135,14 +135,14 @@ export default {
   }
 
   &__unlocked-by + &__locked-by::before {
-    width: 100%;
     border-top: 1px solid rgb(255 255 255 / 0.5);
     padding-top: 1rem;
   }
-
+  
   &__locked-by::before {
     content: "Put back";
     font-size: 0.6rem;
+    width: 100%;
   }
 
   &__unlocked-by,
