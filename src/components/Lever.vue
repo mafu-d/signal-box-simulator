@@ -11,11 +11,13 @@
     <div class="lever__label" v-else>
       {{ label }}
     </div>
-    <div class="lever__unlocked-by">
-      {{ unlockedByList.join(", ") }}
-    </div>
-    <div class="lever__locked-by">
-      {{ lockedByList.join(", ") }}
+    <div class="lever__locks">
+      <div class="lever__unlocked-by" v-if="unlockedByList.length">
+        {{ unlockedByList.join(", ") }}
+      </div>
+      <div class="lever__locked-by" v-if="lockedByList.length">
+        {{ lockedByList.join(", ") }}
+      </div>
     </div>
     <div class="lever__switch">
       <input
@@ -79,7 +81,7 @@ export default {
 <style lang="scss">
 .lever {
   display: grid;
-  grid-template-rows: max-content auto max-content max-content max-content;
+  grid-template-rows: max-content auto max-content max-content;
   gap: 1rem;
   padding: 0.5rem;
   text-transform: uppercase;
@@ -123,18 +125,24 @@ export default {
     }
   }
 
+  &__locks {
+    display: grid;
+    gap: 1rem;
+  }
+
   &__unlocked-by {
     margin-top: 1rem;
   }
 
-  &__locked-by {
-    &::before {
-      content: "Put back";
-      font-size: 0.6rem;
-      width: 100%;
-      border-top: 1px solid rgb(255 255 255 / 0.5);
-      padding-top: 1rem;
-    }
+  &__unlocked-by + &__locked-by::before {
+    width: 100%;
+    border-top: 1px solid rgb(255 255 255 / 0.5);
+    padding-top: 1rem;
+  }
+
+  &__locked-by::before {
+    content: "Put back";
+    font-size: 0.6rem;
   }
 
   &__unlocked-by,
