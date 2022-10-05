@@ -151,7 +151,7 @@ export default {
           state: 0,
           label: "Down Shed Catch",
           type: "point",
-          unlockedBy: { 14: 0, 13: 0, 4: 0 },
+          unlockedBy: { 14: 0, 13: 0, 4: 0, 5: 0 },
         },
         {
           id: 13,
