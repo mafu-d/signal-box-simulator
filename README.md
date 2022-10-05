@@ -1,35 +1,20 @@
-# signal-box-demo
+# Frontington Signal Box Simulator
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a web-based simulator for the signal box at the (fictional) Frontington Station. Built in [Vue.js](https://vuejs.org), it simulates the interlocking mechanism of the levers, ensuring safe routing in and out of the station.
 
-## Recommended IDE Setup
+## Demo
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+TBD
 
-## Customize configuration
+## Development
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- `npm i`
+- `npm run dev`
 
-## Project Setup
+## Deployment
 
-```sh
-npm install
-```
+- `npm run build`
 
-### Compile and Hot-Reload for Development
+## Copyright
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+(C) Matthew Dawkins 2022. All rights reserved.
