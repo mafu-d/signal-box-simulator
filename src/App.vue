@@ -13,6 +13,14 @@
         @changeState="stateChanged"
       />
     </div>
+    <footer>
+      <div>&copy; Matthew Dawkins 2022. All rights reserved.</div>
+      <div>
+        <a href="https://github.com/mafu-d/signal-box-simulator" target="_blank"
+          >Github</a
+        >
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -231,5 +239,14 @@ body {
   width: 100%;
   height: auto;
   margin-bottom: 1rem;
+}
+
+footer {
+  margin-top: 5rem;
+  padding: 3rem;
+  background: #eee;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
