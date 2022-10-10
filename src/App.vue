@@ -14,11 +14,17 @@
       />
     </div>
     <footer>
-      <div>&copy; Matthew Dawkins 2022. All rights reserved.</div>
       <div>
+        <span>&copy; Matthew Dawkins 2022. All rights reserved.</span>
         <a href="https://github.com/mafu-d/signal-box-simulator" target="_blank"
           >Github</a
         >
+      </div>
+      <div>
+        <img
+          src="https://api.thegreenwebfoundation.org/greencheckimage/signalbox.matthewdawkins.co.uk?nocache=true"
+          alt="This website is hosted Green - checked by thegreenwebfoundation.org"
+        />
       </div>
     </footer>
   </div>
@@ -248,5 +254,9 @@ footer {
   font-size: 0.8rem;
   display: flex;
   justify-content: space-between;
+}
+footer > div {
+  display: flex;
+  gap: 1rem;
 }
 </style>
