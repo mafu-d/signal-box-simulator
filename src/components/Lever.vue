@@ -30,6 +30,7 @@
         :disabled="!unlocked"
       />
     </div>
+    <audio src="lever.mp3" ref="leverSound" volume="0.5"></audio>
   </div>
 </template>
 
@@ -53,6 +54,13 @@ export default {
   methods: {
     changeState() {
       this.$emit("changeState", { id: this.id, newState: !this.state });
+    },
+  },
+
+  watch: {
+    state() {
+      this.$refs.leverSound.currentTime = 0;
+      this.$refs.leverSound.play();
     },
   },
 
