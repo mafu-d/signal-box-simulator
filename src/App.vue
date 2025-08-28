@@ -235,13 +235,7 @@ onMounted(() => {
       alt="Diagram"
       class="diagram"
     />
-    <div class="audio-controls">
-      <h2>Ambience</h2>
-      <audio
-        src="https://sound-effects-media.bbcrewind.co.uk/mp3/0009032.mp3"
-        controls
-        loop
-      ></audio>
+    <div class="telegraph-notes">
       <h2>Telegraph</h2>
       <audio src="bell.mp3" ref="bell" volume="0.5"></audio>
       <audio src="switch.mp3" ref="tap" volume="0.5"></audio>
@@ -253,8 +247,6 @@ onMounted(() => {
           <u>T</u>ap (outgoing)
         </button>
       </div>
-    </div>
-    <div class="telegraph-notes">
       <p>1: Attention</p>
       <ul>
         <li>1-2: Branch freight train</li>
@@ -265,6 +257,14 @@ onMounted(() => {
       </ul>
       <p>2: Train entering section</p>
       <p>2-1: Train arrived</p>
+    </div>
+    <div class="audio-controls">
+      <h2>Ambience</h2>
+      <audio
+        src="https://sound-effects-media.bbcrewind.co.uk/mp3/0009032.mp3"
+        controls
+        loop
+      ></audio>
     </div>
     <div class="frame">
       <Lever
