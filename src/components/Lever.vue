@@ -1,5 +1,13 @@
 <template>
-  <div class="lever" :data-type="type" :data-reversed="state">
+  <div
+    class="lever"
+    :data-type="type"
+    :data-reversed="state"
+    @click="changeState"
+    :title="`Keypress: ${
+      id === 11 ? 'Shift + 1' : id < 10 ? id : '1 + ' + Math.floor(id % 10)
+    }`"
+  >
     <div class="lever__number">
       {{ id }}
     </div>
@@ -26,7 +34,6 @@
         max="1"
         step="1"
         :value="state ? 1 : 0"
-        @click="changeState"
         :disabled="!unlocked"
       />
     </div>
@@ -96,6 +103,7 @@ export default {
   text-transform: uppercase;
   text-align: center;
   color: white;
+  cursor: pointer;
 
   &[data-type="signal"] {
     background: var(--signal);
