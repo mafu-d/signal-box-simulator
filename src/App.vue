@@ -44,7 +44,8 @@ export default {
 
   methods: {
     stateChanged({ id, newState }) {
-      console.log(`lever ${id} changed state to ${newState}`);
+      if (!this.levers.find((lever) => lever.id == id)) return;
+      if (!this.levers.find((lever) => lever.id == id).unlocked) return;
       this.levers.find((lever) => lever.id === id).state = newState;
       this.setLockState();
     },
@@ -76,7 +77,10 @@ export default {
     });
 
     document.addEventListener("keyup", (e) => {
-      const keyPress = this.keys.join("");
+      let keyPress = this.keys.join("");
+      if (keyPress === "Shift!") {
+        keyPress = "11";
+      }
       this.keys.splice(0, this.keys.length);
       if (keyPress >= 1 && keyPress <= 18) {
         this.stateChanged({ 
