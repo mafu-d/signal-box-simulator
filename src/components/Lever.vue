@@ -1,5 +1,5 @@
 <template>
-  <div class="lever" :data-type="type" :data-reversed="state == 1">
+  <div class="lever" :data-type="type" :data-reversed="state">
     <div class="lever__number">
       {{ id }}
     </div>
@@ -25,7 +25,7 @@
         min="0"
         max="1"
         step="1"
-        v-model="state"
+        :value="state ? 1 : 0"
         @change="changeState"
         :disabled="!unlocked"
       />
@@ -41,17 +41,18 @@ export default {
     type: String,
     unlockedBy: Object,
     unlocked: Boolean,
+    state: Boolean,
   },
 
-  data() {
-    return {
-      state: 0,
-    };
-  },
+  // data() {
+  //   return {
+  //     state: 0,
+  //   };
+  // },
 
   methods: {
     changeState() {
-      this.$emit("changeState", { id: this.id, newState: this.state == 1 });
+      this.$emit("changeState", { id: this.id, newState: !this.state });
     },
   },
 
