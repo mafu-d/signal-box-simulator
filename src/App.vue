@@ -1,6 +1,7 @@
 <template>
   <div class="signal-box">
-    <Diagram class="diagram" />
+    <img src="/public/Frontington Signal Box Plan.png" alt="Diagram" class="diagram">
+    <div class="audio-controls"></div>
     <div class="frame">
       <Lever
         v-for="lever in levers"
@@ -253,7 +254,14 @@ body {
   font-family: "Lato", sans-serif;
 }
 
+.signal-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
 .frame {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   /* flex-wrap: wrap; */
@@ -263,7 +271,6 @@ body {
 .diagram {
   width: 100%;
   height: auto;
-  margin-bottom: 1rem;
 }
 
 footer {

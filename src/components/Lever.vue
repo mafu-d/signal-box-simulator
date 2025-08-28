@@ -174,6 +174,7 @@ export default {
       appearance: slider-vertical;
       transform: rotate(180deg);
       width: 3rem;
+      height: 3rem;
 
       &[disabled] {
         opacity: 0.3;
