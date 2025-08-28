@@ -26,7 +26,7 @@
         max="1"
         step="1"
         :value="state ? 1 : 0"
-        @change="changeState"
+        @click="changeState"
         :disabled="!unlocked"
       />
     </div>
@@ -139,7 +139,7 @@ export default {
     border-top: 1px solid rgb(255 255 255 / 0.5);
     padding-top: 1rem;
   }
-  
+
   &__locked-by::before {
     content: "Put back";
     font-size: 0.6rem;
