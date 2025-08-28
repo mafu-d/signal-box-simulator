@@ -297,7 +297,7 @@ onMounted(() => {
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap");
 
 :root {
   --signal: #d00;
@@ -306,7 +306,8 @@ onMounted(() => {
 }
 
 body {
-  font-family: "Lato", sans-serif;
+  font-family: "Jost", sans-serif;
+  line-height: 1;
 }
 
 .signal-box {
