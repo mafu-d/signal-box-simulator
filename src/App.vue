@@ -284,8 +284,8 @@ onMounted(async () => {
     </div>
     <div class="audio-controls">
       <h2>Serial connect</h2>
-      <button @click="connectToArduino">Connect</button>
-      <button @click="disconnectFromArduino">Disconnect</button>
+      <button v-if="port" @click="disconnectFromArduino">Disconnect</button>
+      <button v-else @click="connectToArduino">Connect</button>
       <h2>Ambience</h2>
       <audio
         src="https://sound-effects-media.bbcrewind.co.uk/mp3/0009032.mp3"
