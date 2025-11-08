@@ -166,17 +166,7 @@ const stateChanged = async ({ id, newState }) => {
   setLockState();
 
   // Send data to Arduino
-  if (!port.value) {
-    console.log("Port not open");
-
-    return;
-  }
-  const writer = port.value.writable.getWriter();
-  const message = `SET_${id}_${newState ? "ON" : "OFF"}\n`;
-  console.log(message);
-  const data = new TextEncoder().encode(message);
-  await writer.write(data);
-  writer.releaseLock();
+  sendSerialMessage(`SET_${id}_${newState ? "ON" : "OFF"}`);
 };
 
 const setLockState = () => {
@@ -214,9 +204,24 @@ const connectToArduino = async () => {
   // Request access to serial port
   port.value = await navigator.serial.requestPort();
   await port.value.open({ baudRate: 9600 });
+  sendSerialMessage("SERIAL_CONTROL");
 };
 const disconnectFromArduino = async () => {
-  port.value?.close();
+  await sendSerialMessage("BUTTON_CONTROL");
+  await port.value?.close();
+  port.value = null;
+};
+
+const sendSerialMessage = async (msg) => {
+  if (!port.value) {
+    console.log("Port not open");
+    return;
+  }
+  const writer = port.value.writable.getWriter();
+  console.info(msg);
+  const data = new TextEncoder().encode(`${msg}\n`);
+  await writer.write(data);
+  writer.releaseLock();
 };
 
 onMounted(async () => {
