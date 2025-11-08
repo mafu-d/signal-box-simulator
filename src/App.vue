@@ -149,7 +149,7 @@ const levers = ref([
   },
 ]);
 
-const stateChanged = ({ id, newState }) => {
+const stateChanged = async ({ id, newState }) => {
   if (!levers.value.find((lever) => lever.id == id)) {
     console.log(`lever ${id} not found`);
     return;
@@ -164,6 +164,19 @@ const stateChanged = ({ id, newState }) => {
   }
   levers.value.find((lever) => lever.id == id).state = newState;
   setLockState();
+
+  // Send data to Arduino
+  if (!port.value) {
+    console.log("Port not open");
+
+    return;
+  }
+  const writer = port.value.writable.getWriter();
+  const message = `SET_${id}_${newState ? "ON" : "OFF"}\n`;
+  console.log(message);
+  const data = new TextEncoder().encode(message);
+  await writer.write(data);
+  writer.releaseLock();
 };
 
 const setLockState = () => {
@@ -195,7 +208,18 @@ const play = (what) => {
   sound.value.play();
 };
 
-onMounted(() => {
+const port = ref();
+
+const connectToArduino = async () => {
+  // Request access to serial port
+  port.value = await navigator.serial.requestPort();
+  await port.value.open({ baudRate: 9600 });
+};
+const disconnectFromArduino = async () => {
+  port.value?.close();
+};
+
+onMounted(async () => {
   setLockState();
 
   document.addEventListener("keydown", (e) => {
@@ -259,6 +283,9 @@ onMounted(() => {
       <p>2-1: Train arrived</p>
     </div>
     <div class="audio-controls">
+      <h2>Serial connect</h2>
+      <button @click="connectToArduino">Connect</button>
+      <button @click="disconnectFromArduino">Disconnect</button>
       <h2>Ambience</h2>
       <audio
         src="https://sound-effects-media.bbcrewind.co.uk/mp3/0009032.mp3"
