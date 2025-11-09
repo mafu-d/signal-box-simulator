@@ -66,14 +66,14 @@ body {
 }
 
 .switcher {
-  padding: 1rem 3rem;
+  padding: 0 3rem;
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
 .switcher button {
   font: inherit;
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 0.5rem 3rem;
   &.active {
     background: gray;
