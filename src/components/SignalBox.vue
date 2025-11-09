@@ -106,7 +106,7 @@ onMounted(() => {
       keyPress = "11";
     }
     keys.value.splice(0, keys.value.length);
-    if (keyPress >= 1 && keyPress <= 18) {
+    if (keyPress >= 0 && keyPress <= 20) {
       stateChanged({
         id: parseInt(keyPress),
         newState: !levers.value.find((lever) => lever.id == keyPress).state,

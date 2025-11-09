@@ -11,6 +11,14 @@ defineProps({
 
 const levers = ref([
   {
+    id: 0,
+    label: ["Ptfm 2", "Loop"],
+    type: "point",
+    state: false,
+    unlockedBy: {},
+    unlocked: true,
+  },
+  {
     id: 1,
     unlocked: true,
     state: false,
