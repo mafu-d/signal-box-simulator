@@ -37,7 +37,7 @@
         :disabled="!unlocked"
       />
     </div>
-    <audio src="lever.mp3" ref="leverSound" volume="0.5"></audio>
+    <audio src="lever.mp3" ref="leverSound" :volume="isMuted ? 0 : 0.5"></audio>
   </div>
 </template>
 
@@ -50,6 +50,7 @@ export default {
     unlockedBy: Object,
     unlocked: Boolean,
     state: Boolean,
+    isMuted: Boolean,
   },
 
   // data() {

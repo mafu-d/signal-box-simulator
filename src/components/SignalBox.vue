@@ -11,6 +11,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isMuted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const levers = defineModel();
@@ -59,6 +63,7 @@ const bellButton = ref();
 const tapButton = ref();
 
 const play = (what) => {
+  if (props.isMuted) return;
   const sound = what === "bell" ? bell : tap;
   sound.value.currentTime = 0;
   sound.value.play();
@@ -172,6 +177,7 @@ onMounted(() => {
         :state="lever.state"
         :unlockedBy="lever.unlockedBy"
         :unlocked="lever.unlocked"
+        :is-muted="isMuted"
         @changeState="stateChanged"
       />
     </div>

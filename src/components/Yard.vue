@@ -57,6 +57,7 @@ const levers = ref([
   <SignalBox
     v-show="isActive"
     :is-active="isActive"
+    is-muted
     v-model="levers"
     diagram-url="/public/Yard Signal Box Plan.png"
   />
