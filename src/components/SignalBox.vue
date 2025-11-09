@@ -76,11 +76,13 @@ const connectToArduino = async () => {
   try {
     port.value = await navigator.serial.requestPort();
     await port.value.open({ baudRate: 9600 });
-    sendSerialMessage("SERIAL_CONTROL");
   } catch (error) {
     port.value = null;
     alert(error);
   }
+  setTimeout(() => {
+    sendSerialMessage("SERIAL_CONTROL");
+  }, 100);
 };
 const disconnectFromArduino = async () => {
   await sendSerialMessage("BUTTON_CONTROL");
@@ -94,10 +96,10 @@ const sendSerialMessage = async (msg) => {
     return;
   }
   const writer = port.value.writable.getWriter();
-  console.info(msg);
   const data = new TextEncoder().encode(`${msg}\n`);
   await writer.write(data);
   writer.releaseLock();
+  console.info(msg);
 };
 
 onMounted(() => {
@@ -105,7 +107,7 @@ onMounted(() => {
 
   document.addEventListener("keydown", (e) => {
     if (!props.isActive) return;
-    if (keys.value.includes(e.key)) return;
+    if (keys.value.includes(e.key) || e.key === "Alt") return;
     keys.value.push(e.key);
   });
 
