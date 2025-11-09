@@ -73,9 +73,14 @@ const port = ref();
 
 const connectToArduino = async () => {
   // Request access to serial port
-  port.value = await navigator.serial.requestPort();
-  await port.value.open({ baudRate: 9600 });
-  sendSerialMessage("SERIAL_CONTROL");
+  try {
+    port.value = await navigator.serial.requestPort();
+    await port.value.open({ baudRate: 9600 });
+    sendSerialMessage("SERIAL_CONTROL");
+  } catch (error) {
+    port.value = null;
+    alert(error);
+  }
 };
 const disconnectFromArduino = async () => {
   await sendSerialMessage("BUTTON_CONTROL");
