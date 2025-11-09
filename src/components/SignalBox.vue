@@ -2,9 +2,13 @@
 import { onMounted, ref } from "vue";
 import Lever from "./Lever.vue";
 
-defineProps({
+const props = defineProps({
   diagramUrl: {
     type: String,
+    required: true,
+  },
+  isActive: {
+    type: Boolean,
     required: true,
   },
 });
@@ -90,11 +94,13 @@ onMounted(() => {
   setLockState();
 
   document.addEventListener("keydown", (e) => {
+    if (!props.isActive) return;
     if (keys.value.includes(e.key)) return;
     keys.value.push(e.key);
   });
 
   document.addEventListener("keyup", (e) => {
+    if (!props.isActive) return;
     let keyPress = keys.value.join("");
     if (keyPress === "Shift!") {
       keyPress = "11";
@@ -181,9 +187,14 @@ onMounted(() => {
 
 .frame {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(18, 1fr);
+  display: flex;
   gap: 1px;
+  justify-content: center;
+
+  > * {
+    flex: 1;
+    max-width: 7vw;
+  }
 }
 
 .diagram {

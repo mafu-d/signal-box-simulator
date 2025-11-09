@@ -2,6 +2,13 @@
 import { ref } from "vue";
 import SignalBox from "./SignalBox.vue";
 
+defineProps({
+  isActive: {
+    type: Boolean,
+    require: true,
+  },
+});
+
 const levers = ref([
   {
     id: 1,
@@ -152,6 +159,8 @@ const levers = ref([
 
 <template>
   <SignalBox
+    v-show="isActive"
+    :is-active="isActive"
     v-model="levers"
     diagram-url="/public/Frontington Signal Box Plan.png"
   />

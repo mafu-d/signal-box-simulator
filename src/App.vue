@@ -1,6 +1,7 @@
 <script setup>
 import Frontington from "./components/Frontington.vue";
 import { onMounted, ref } from "vue";
+import Yard from "./components/Yard.vue";
 
 const activeTab = ref(2);
 
@@ -34,7 +35,8 @@ const selectNext = () => {
         {{ tab }}
       </button>
     </div>
-    <Frontington v-show="activeTab === 2" />
+    <Yard :is-active="activeTab === 1" />
+    <Frontington :is-active="activeTab === 2" />
     <footer>
       <div>
         <span
