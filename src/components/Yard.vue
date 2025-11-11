@@ -59,6 +59,6 @@ const levers = ref([
     :is-active="isActive"
     is-muted
     v-model="levers"
-    diagram-url="/public/Yard Signal Box Plan.png"
+    diagram-url="/Yard Signal Box Plan.png"
   />
 </template>

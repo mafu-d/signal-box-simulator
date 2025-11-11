@@ -3,31 +3,37 @@ import Frontington from "./components/Frontington.vue";
 import { onMounted, ref } from "vue";
 import Yard from "./components/Yard.vue";
 
-const activeTab = ref(2);
+const activeTab = ref(1);
+
+const signalBoxes = [
+  // "Tutherside",
+  "Yard",
+  "Frontington",
+];
 
 const selectPrevious = () => {
   activeTab.value--;
   if (activeTab.value < 0) {
-    activeTab.value = 2;
+    activeTab.value = signalBoxes.length - 1;
   }
 };
 const selectNext = () => {
   activeTab.value++;
-  if (activeTab.value > 2) {
+  if (activeTab.value > signalBoxes.length - 1) {
     activeTab.value = 0;
   }
 };
 </script>
 
 <template>
-  <div
-    class="signal-box"
-    @keydown.left="selectPrevious"
-    @keydown.right="selectNext"
-  >
-    <div class="switcher">
+  <div class="signal-box">
+    <div
+      class="switcher"
+      @keydown.left="selectPrevious"
+      @keydown.right="selectNext"
+    >
       <button
-        v-for="(tab, index) in ['Tutherside', 'Yard', 'Frontington']"
+        v-for="(tab, index) in signalBoxes"
         :key="index"
         :class="{ active: activeTab === index }"
         @click="activeTab = index"
@@ -35,8 +41,16 @@ const selectNext = () => {
         {{ tab }}
       </button>
     </div>
-    <Yard :is-active="activeTab === 1" />
-    <Frontington :is-active="activeTab === 2" />
+    <Yard
+      :is-active="activeTab === 0"
+      @arrow-left="selectPrevious"
+      @arrow-right="selectNext"
+    />
+    <Frontington
+      :is-active="activeTab === 1"
+      @arrow-left="selectPrevious"
+      @arrow-right="selectNext"
+    />
     <footer>
       <div>
         <span

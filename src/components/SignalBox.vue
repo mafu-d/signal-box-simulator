@@ -132,9 +132,17 @@ onMounted(() => {
       tapButton.value.focus();
       tapButton.value.click();
     }
+    if (keyPress === "ArrowLeft") {
+      emit("arrow-left");
+    }
+    if (keyPress === "ArrowRight") {
+      emit("arrow-right");
+    }
     console.log(keyPress);
   });
 });
+
+const emit = defineEmits(["arrow-left", "arrow-right"]);
 </script>
 
 <template>

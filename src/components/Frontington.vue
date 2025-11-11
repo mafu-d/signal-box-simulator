@@ -170,6 +170,6 @@ const levers = ref([
     v-show="isActive"
     :is-active="isActive"
     v-model="levers"
-    diagram-url="/public/Frontington Signal Box Plan.png"
+    diagram-url="/Frontington Signal Box Plan.png"
   />
 </template>
