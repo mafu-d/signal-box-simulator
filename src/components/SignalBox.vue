@@ -117,8 +117,12 @@ onMounted(() => {
     if (keyPress === "Shift!") {
       keyPress = "11";
     }
+    if (keyPress === 'Shift"') {
+      keyPress = "22";
+    }
     keys.value.splice(0, keys.value.length);
-    if (keyPress >= 0 && keyPress <= 20) {
+    if (keyPress >= 0 && keyPress <= 30 && keyPress !== "") {
+      console.log({ keyPress });
       stateChanged({
         id: parseInt(keyPress),
         newState: !levers.value.find((lever) => lever.id == keyPress).state,

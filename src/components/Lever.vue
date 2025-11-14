@@ -146,6 +146,7 @@ export default {
   &__locks {
     display: grid;
     gap: 1rem;
+    font-size: 0.6rem;
   }
 
   &__unlocked-by {
