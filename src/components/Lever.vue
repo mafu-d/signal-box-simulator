@@ -105,6 +105,8 @@ export default {
   text-align: center;
   color: white;
   cursor: pointer;
+  box-shadow: var(--color) 0 0 0 0, var(--color) 0 0 0 0;
+  transition: all 300ms ease-out;
 
   &[data-type="signal"] {
     background: var(--signal);
