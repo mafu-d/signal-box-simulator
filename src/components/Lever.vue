@@ -100,7 +100,7 @@ export default {
   display: grid;
   grid-template-rows: max-content auto max-content max-content;
   gap: 1rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.2rem;
   text-transform: uppercase;
   text-align: center;
   color: white;
@@ -190,7 +190,7 @@ export default {
     input {
       appearance: slider-vertical;
       transform: rotate(180deg);
-      width: 3rem;
+      width: 2rem;
       height: 3rem;
 
       &[disabled] {

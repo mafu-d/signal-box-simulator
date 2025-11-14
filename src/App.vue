@@ -2,14 +2,11 @@
 import Frontington from "./components/Frontington.vue";
 import { onMounted, ref } from "vue";
 import Yard from "./components/Yard.vue";
+import Tutherside from "./components/Tutherside.vue";
 
-const activeTab = ref(1);
+const activeTab = ref(2);
 
-const signalBoxes = [
-  // "Tutherside",
-  "Yard",
-  "Frontington",
-];
+const signalBoxes = ["Tutherside", "Yard", "Frontington"];
 
 const selectPrevious = () => {
   activeTab.value--;
@@ -41,13 +38,18 @@ const selectNext = () => {
         {{ tab }}
       </button>
     </div>
-    <Yard
+    <Tutherside
       :is-active="activeTab === 0"
       @arrow-left="selectPrevious"
       @arrow-right="selectNext"
     />
-    <Frontington
+    <Yard
       :is-active="activeTab === 1"
+      @arrow-left="selectPrevious"
+      @arrow-right="selectNext"
+    />
+    <Frontington
+      :is-active="activeTab === 2"
       @arrow-left="selectPrevious"
       @arrow-right="selectNext"
     />
