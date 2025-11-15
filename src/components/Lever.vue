@@ -125,6 +125,8 @@ export default {
 
   &[data-reversed="true"] {
     box-shadow: var(--color) 0 1rem 0 0, var(--color) 0 -1rem 0 0;
+    filter: brightness(1.6);
+    transform: scale(1.03);
   }
 
   &__number {
