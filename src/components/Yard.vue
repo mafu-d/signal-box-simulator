@@ -12,7 +12,7 @@ defineProps({
 const levers = ref([
   {
     id: 1,
-    label: ["Branch", "Fiddle Yard"],
+    label: ["Back", "Front"],
     type: "point",
     state: false,
     unlockedBy: {},
@@ -28,7 +28,7 @@ const levers = ref([
   },
   {
     id: 3,
-    label: ["Back", "Front"],
+    label: ["Main", "Fiddle Yard"],
     type: "point",
     state: false,
     unlockedBy: {},
@@ -36,15 +36,7 @@ const levers = ref([
   },
   {
     id: 4,
-    label: ["Branch", "Fiddle Yard"],
-    type: "point",
-    state: false,
-    unlockedBy: {},
-    unlocked: true,
-  },
-  {
-    id: 5,
-    label: ["Branch", "Loop"],
+    label: ["Main", "Loop"],
     type: "point",
     state: false,
     unlockedBy: {},

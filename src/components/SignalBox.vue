@@ -208,6 +208,7 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 1rem;
+  align-items: center;
 }
 
 .frame {

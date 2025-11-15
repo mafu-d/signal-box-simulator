@@ -111,7 +111,7 @@ const levers = ref([
   {
     id: 11,
     type: "point",
-    label: "Ptfm 2 Catch",
+    label: "Ptfm 1 Catch",
     state: false,
     unlocked: false,
     unlockedBy: { 1: 0, 22: 0, 15: 1 },
@@ -119,7 +119,7 @@ const levers = ref([
   {
     id: 12,
     type: "point",
-    label: "Ptfm 1 Catch",
+    label: "Ptfm 2 Catch",
     state: false,
     unlocked: false,
     unlockedBy: { 2: 0, 13: 0, 15: 0, 23: 0 },
@@ -236,6 +236,6 @@ const levers = ref([
     v-show="isActive"
     :is-active="isActive"
     v-model="levers"
-    diagram-url=""
+    diagram-url="/Tutherside Signal Box Plan.png"
   />
 </template>
