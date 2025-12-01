@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import Lever from "./Lever.vue";
+import Arduino from "./Arduino.vue";
 
 const props = defineProps({
   diagramUrl: {
@@ -36,7 +37,7 @@ const stateChanged = async ({ id, newState }) => {
   setLockState();
 
   // Send data to Arduino
-  sendSerialMessage(`SET_${id}_${newState ? "ON" : "OFF"}`);
+  // sendSerialMessage(`SET_${id}_${newState ? "ON" : "OFF"}`);
 };
 
 const setLockState = () => {
@@ -69,38 +70,41 @@ const play = (what) => {
   sound.value.play();
 };
 
-const port = ref();
+// const message = ref("");
 
-const connectToArduino = async () => {
-  // Request access to serial port
-  try {
-    port.value = await navigator.serial.requestPort();
-    await port.value.open({ baudRate: 9600 });
-  } catch (error) {
-    port.value = null;
-    alert(error);
-  }
-  setTimeout(() => {
-    sendSerialMessage("SERIAL_CONTROL");
-  }, 100);
-};
-const disconnectFromArduino = async () => {
-  await sendSerialMessage("BUTTON_CONTROL");
-  await port.value?.close();
-  port.value = null;
-};
+// const port = ref();
 
-const sendSerialMessage = async (msg) => {
-  if (!port.value) {
-    console.log("Port not open");
-    return;
-  }
-  const writer = port.value.writable.getWriter();
-  const data = new TextEncoder().encode(`${msg}\n`);
-  await writer.write(data);
-  writer.releaseLock();
-  console.info(msg);
-};
+// const connectToArduino = async () => {
+//   // Request access to serial port
+//   try {
+//     port.value = await navigator.serial.requestPort();
+//     await port.value.open({ baudRate: 9600 });
+//   } catch (error) {
+//     port.value = null;
+//     alert(error);
+//   }
+//   setTimeout(() => {
+//     sendSerialMessage("SERIAL_CONTROL");
+//   }, 100);
+// };
+// const disconnectFromArduino = async () => {
+//   await sendSerialMessage("BUTTON_CONTROL");
+//   await port.value?.close();
+//   port.value = null;
+// };
+
+// const sendSerialMessage = async (msg) => {
+//   message.value = msg;
+//   if (!port.value) {
+//     console.log("Port not open");
+//     return;
+//   }
+//   const writer = port.value.writable.getWriter();
+//   const data = new TextEncoder().encode(`${msg}\n`);
+//   await writer.write(data);
+//   writer.releaseLock();
+//   console.info(msg);
+// };
 
 onMounted(() => {
   setLockState();
@@ -177,8 +181,9 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
     </div>
     <div class="audio-controls">
       <h2>Serial connect</h2>
-      <button v-if="port" @click="disconnectFromArduino">Disconnect</button>
-      <button v-else @click="connectToArduino">Connect</button>
+      <!-- <button v-if="port" @click="disconnectFromArduino">Disconnect</button>
+      <button v-else @click="connectToArduino">Connect</button> -->
+      <Arduino :levers="levers" />
       <h2>Ambience</h2>
       <audio
         src="https://sound-effects-media.bbcrewind.co.uk/mp3/0009032.mp3"
