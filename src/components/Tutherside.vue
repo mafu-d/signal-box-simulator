@@ -66,7 +66,7 @@ const levers = ref([
     label: "Up F'ton Adv Start",
     state: false,
     unlocked: false,
-    unlockedBy: {19: 1},
+    unlockedBy: {19: 1, 26: 0},
   },
   {
     id: 6,
@@ -74,7 +74,7 @@ const levers = ref([
     label: "Up G'Bdg Adv Start",
     state: false,
     unlocked: true,
-    unlockedBy: {19: 0},
+    unlockedBy: {19: 0, 27: 0},
   },
   {
     id: 7,
@@ -234,7 +234,7 @@ const levers = ref([
     label: "Down F'ton Home",
     state: false,
     unlocked: false,
-    unlockedBy: { 19: 1, 3: 0 },
+    unlockedBy: { 19: 1, 3: 0, 5: 0 },
   },
   {
     id: 27,
@@ -242,7 +242,7 @@ const levers = ref([
     label: "Down G'Bdg Home",
     state: false,
     unlocked: false,
-    unlockedBy: { 19: 0, 4: 0 },
+    unlockedBy: { 19: 0, 4: 0, 6: 0 },
   },
 ]);
 </script>
