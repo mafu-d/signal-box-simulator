@@ -156,40 +156,11 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
 <template>
   <div class="signal-box">
     <img :src="diagramUrl" alt="Diagram" class="diagram" />
-    <div class="telegraph-notes">
-      <h2>Telegraph</h2>
-      <audio src="bell.mp3" ref="bell" volume="0.5"></audio>
-      <audio src="switch.mp3" ref="tap" volume="0.5"></audio>
-      <div>
-        <button accesskey="b" ref="bellButton" @click="play('bell')">
-          <u>B</u>ell (incoming)
-        </button>
-        <button accesskey="t" ref="tapButton" @click="play('tap')">
-          <u>T</u>ap (outgoing)
-        </button>
-      </div>
-      <p>1: Attention</p>
-      <ul>
-        <li>1-2: Branch freight train</li>
-        <li>1-3: Branch passenger train</li>
-        <li>2-3: Light engine</li>
-        <li>3-1: Mixed train (passenger and freight)</li>
-        <li>3-1-3: Auto-train</li>
-      </ul>
-      <p>2: Train entering section</p>
-      <p>2-1: Train arrived</p>
-    </div>
     <div class="audio-controls">
       <h2>Serial connect</h2>
       <!-- <button v-if="port" @click="disconnectFromArduino">Disconnect</button>
       <button v-else @click="connectToArduino">Connect</button> -->
       <Arduino :levers="levers" />
-      <h2>Ambience</h2>
-      <audio
-        src="https://sound-effects-media.bbcrewind.co.uk/mp3/0009032.mp3"
-        controls
-        loop
-      ></audio>
     </div>
     <div class="frame">
       <Lever
@@ -211,7 +182,7 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
 <style scoped>
 .signal-box {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 1rem;
   align-items: center;
 }
