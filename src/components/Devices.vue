@@ -6,7 +6,8 @@ const devices = ref([]);
 
 const connectNewDevice = () => {
     devices.value.push({
-        id: new Date().getTime(),
+        // This will ultimately be set by the message returning from the device identifying itself
+        id: devices.value.length + 1,
     });
 }
 
@@ -27,6 +28,34 @@ const editDeviceSettings = (id) => {
     activeDeviceSettingsId.value = id;
     deviceDialogRef.value.showModal();
 }
+
+const servoSettings = ref([]);
+onMounted(() => {
+    const board_1 = [];
+    const board_2 = [];
+    for (let index = 0; index < 16; index++) {
+        board_1.push({
+            servo_id: index,
+            lever_id: null,
+            off_position: 300,
+            on_position: 400,
+            easing_type: 1,
+            duration: 2000,
+        });
+        board_2.push({
+            servo_id: index,
+            lever_id: null,
+            off_position: 300,
+            on_position: 400,
+            easing_type: 1,
+            duration: 2000,
+        });
+    }
+    servoSettings.value = [
+        board_1,
+        board_2,
+    ]
+})
 </script>
 
 <template>
@@ -41,12 +70,11 @@ const editDeviceSettings = (id) => {
         </li>
     </ul>
     <dialog ref="deviceDialogRef">
-        <h2>Edit settings for device {{ activeDeviceSettingsId }}</h2>
-        <select>
-            <option value="1">Frontington</option>
-            <option value="2">Tutherside</option>
-        </select>
-        <table>
+        <h2>Edit settings for device {{ activeDeviceSettingsId }} :
+            <span v-if="activeDeviceSettingsId === 1">Frontington</span>
+            <span v-if="activeDeviceSettingsId === 2">Tutherside</span>
+        </h2>
+        <table v-if="activeDeviceSettingsId">
             <thead>
                 <tr>
                     <th>Servo ID</th>
@@ -61,23 +89,27 @@ const editDeviceSettings = (id) => {
                 <tr v-for="i in 16">
                     <td>{{ i - 1 }}</td>
                     <td>
-                        <input type="number" min="0">
+                        <input type="number" min="0"
+                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].lever_id">
                     </td>
                     <td>
-                        <input type="number" min="80" max="550" step="10">
+                        <input type="number" min="80" max="550" step="10"
+                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].off_position">
                     </td>
                     <td>
-                        <input type="number" min="80" max="550" step="10">
+                        <input type="number" min="80" max="550" step="10"
+                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].on_position">
                     </td>
                     <td>
-                        <select>
+                        <select v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].easing_type">
                             <option value="0">Linear</option>
                             <option value="1">Smooth</option>
                             <option value="2">Bounce</option>
                         </select>
                     </td>
                     <td>
-                        <input type="number" min="100" max="9900" step="100">
+                        <input type="number" min="100" max="9900" step="100"
+                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].duration">
                     </td>
                 </tr>
             </tbody>
