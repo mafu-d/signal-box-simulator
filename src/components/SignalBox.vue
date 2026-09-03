@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import Lever from "./Lever.vue";
+import { MessageBus } from "../MessageBus.js";
 // import Arduino from "./Arduino.vue";
 
 const props = defineProps({
@@ -33,7 +34,7 @@ const stateChanged = async ({ id, newState }) => {
     console.log("lever already in this state");
     return;
   }
-  levers.value.find((lever) => lever.id == id).state = newState;
+  levers.value.find((lever) => lever.id == id).setState(newState);
   setLockState();
 
   // Send data to Arduino

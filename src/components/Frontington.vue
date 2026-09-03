@@ -19,7 +19,7 @@ const levers = ref([
   new Signal(6, "Down Loop Start Disc", [13], [15, 25]),
   new Signal(7, "Down Ptfm 2 Start", [], [13, 15, 24]),
   new Signal(8, "Down Adv Start"),
-  new Point(9, ["Up Main", "Up Loop"], [], [1, 2, 10, 20, 21]),
+  new Point(9, ["Up Main", "Up Loop"], [], [1, 2, 10, 20, 21], 1, [0]),
   new FacingPointLock(10, "FPL for 9", [], [1, 2, 20, 21]),
   new Point(11, ["Ptfm 1", "Goods"], [], [3, 4, 5, 12, 22]),
   new FacingPointLock(12, "FPL for 11", [], [3, 4, 5, 22]),
@@ -40,10 +40,6 @@ const levers = ref([
 </script>
 
 <template>
-  <SignalBox
-    v-show="isActive"
-    :is-active="isActive"
-    v-model="levers"
-    diagram-url="/Frontington Signal Box Plan v2.svg"
-  />
+  <SignalBox v-show="isActive" :is-active="isActive" v-model="levers"
+    diagram-url="/Frontington Signal Box Plan v2.svg" />
 </template>

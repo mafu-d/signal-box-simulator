@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { MessageBus } from '../MessageBus';
 
 const devices = ref([]);
 
@@ -12,6 +13,13 @@ const connectNewDevice = () => {
 const disconnectDevice = (id) => {
     devices.value = devices.value.filter(i => i.id !== id);
 }
+
+watch(() => MessageBus.messages, (messages) => {
+    devices.value.forEach(device => {
+        // Send latest message to this device
+        console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`)
+    });
+});
 </script>
 
 <template>
