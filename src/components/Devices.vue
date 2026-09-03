@@ -31,31 +31,38 @@ const editDeviceSettings = (id) => {
 
 const servoSettings = ref([]);
 onMounted(() => {
-    const board_1 = [];
-    const board_2 = [];
-    for (let index = 0; index < 16; index++) {
-        board_1.push({
-            servo_id: index,
-            lever_id: null,
-            off_position: 300,
-            on_position: 400,
-            easing_type: 1,
-            duration: 2000,
-        });
-        board_2.push({
-            servo_id: index,
-            lever_id: null,
-            off_position: 300,
-            on_position: 400,
-            easing_type: 1,
-            duration: 2000,
-        });
+    servoSettings.value = JSON.parse(localStorage.getItem('servoSettings'));
+    if (!servoSettings.value) {
+        const board_1 = [];
+        const board_2 = [];
+        for (let index = 0; index < 16; index++) {
+            board_1.push({
+                servo_id: index,
+                lever_id: null,
+                off_position: 300,
+                on_position: 400,
+                easing_type: 1,
+                duration: 2000,
+            });
+            board_2.push({
+                servo_id: index,
+                lever_id: null,
+                off_position: 300,
+                on_position: 400,
+                easing_type: 1,
+                duration: 2000,
+            });
+        }
+        servoSettings.value = [
+            board_1,
+            board_2,
+        ]
     }
-    servoSettings.value = [
-        board_1,
-        board_2,
-    ]
-})
+});
+
+watch(() => servoSettings.value, () => {
+    localStorage.setItem('servoSettings', JSON.stringify(servoSettings.value));
+}, { deep: true });
 </script>
 
 <template>
