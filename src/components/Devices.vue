@@ -7,7 +7,7 @@ const devices = ref([]);
 const connectNewDevice = () => {
     devices.value.push({
         // This will ultimately be set by the message returning from the device identifying itself
-        id: devices.value.length + 1,
+        id: devices.value.length,
     });
 }
 
@@ -33,10 +33,10 @@ const servoSettings = ref([]);
 onMounted(() => {
     servoSettings.value = JSON.parse(localStorage.getItem('servoSettings'));
     if (!servoSettings.value) {
+        const board_0 = [];
         const board_1 = [];
-        const board_2 = [];
         for (let index = 0; index < 16; index++) {
-            board_1.push({
+            board_0.push({
                 servo_id: index,
                 lever_id: null,
                 off_position: 300,
@@ -44,7 +44,7 @@ onMounted(() => {
                 easing_type: 1,
                 duration: 2000,
             });
-            board_2.push({
+            board_1.push({
                 servo_id: index,
                 lever_id: null,
                 off_position: 300,
@@ -54,8 +54,8 @@ onMounted(() => {
             });
         }
         servoSettings.value = [
+            board_0,
             board_1,
-            board_2,
         ]
     }
 });
@@ -68,7 +68,7 @@ watch(() => servoSettings.value, () => {
 <template>
     <ul>
         <li v-for="device in devices" :key="device.id" class="device">
-            {{ device.id.toString().slice(-4) }}
+            {{ device.id }}
             <button @click="editDeviceSettings(device.id)">⚙️</button>
             <button @click="disconnectDevice(device.id)">-</button>
         </li>
@@ -78,10 +78,10 @@ watch(() => servoSettings.value, () => {
     </ul>
     <dialog ref="deviceDialogRef">
         <h2>Edit settings for device {{ activeDeviceSettingsId }} :
-            <span v-if="activeDeviceSettingsId === 1">Frontington</span>
-            <span v-if="activeDeviceSettingsId === 2">Tutherside</span>
+            <span v-if="activeDeviceSettingsId === 0">Frontington</span>
+            <span v-if="activeDeviceSettingsId === 1">Tutherside</span>
         </h2>
-        <table v-if="activeDeviceSettingsId">
+        <table v-if="activeDeviceSettingsId !== null">
             <thead>
                 <tr>
                     <th>Servo ID</th>
@@ -96,19 +96,18 @@ watch(() => servoSettings.value, () => {
                 <tr v-for="i in 16">
                     <td>{{ i - 1 }}</td>
                     <td>
-                        <input type="number" min="0"
-                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].lever_id">
+                        <input type="number" min="0" v-model="servoSettings[activeDeviceSettingsId][i - 1].lever_id">
                     </td>
                     <td>
                         <input type="number" min="80" max="550" step="10"
-                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].off_position">
+                            v-model="servoSettings[activeDeviceSettingsId][i - 1].off_position">
                     </td>
                     <td>
                         <input type="number" min="80" max="550" step="10"
-                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].on_position">
+                            v-model="servoSettings[activeDeviceSettingsId][i - 1].on_position">
                     </td>
                     <td>
-                        <select v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].easing_type">
+                        <select v-model="servoSettings[activeDeviceSettingsId][i - 1].easing_type">
                             <option value="0">Linear</option>
                             <option value="1">Smooth</option>
                             <option value="2">Bounce</option>
@@ -116,7 +115,7 @@ watch(() => servoSettings.value, () => {
                     </td>
                     <td>
                         <input type="number" min="100" max="9900" step="100"
-                            v-model="servoSettings[activeDeviceSettingsId - 1][i - 1].duration">
+                            v-model="servoSettings[activeDeviceSettingsId][i - 1].duration">
                     </td>
                 </tr>
             </tbody>

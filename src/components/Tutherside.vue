@@ -15,7 +15,7 @@ const levers = ref([
   new Signal(2, "Up Loop Hdsh Disc", [], [8, 16]),
   new Signal(3, "Up Goods Disc", [9], [17, 20]),
   new Signal(4, "Up Loop Disc", [], [9, 17, 20]),
-  new Signal(5, "Up Ptfm 2 Start", [10], [11, 13, 18]),
+  new Signal(5, "Up Ptfm 2 Start", [10], [11, 13, 18], 0, [0]),
   new Signal(6, "Up Ptfm 1 Start", [13], [19]),
   new Signal(7, "Up Adv Start"),
   new Point(8, ["Down Ptfm 2", "Down Loop"], [], [1, 2, 15, 16]),

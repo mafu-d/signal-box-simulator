@@ -8,7 +8,7 @@ class Lever {
         this.unlockedBy = combineConstraints(on || [], off || []);
         this.state = false;
         this.unlocked = Object.values(this.unlockedBy).filter(Boolean).length > 0;
-        this.board_id = board_id || null;
+        this.board_id = null || board_id;
         this.servo_ids = servo_ids || [];
     }
 
@@ -19,8 +19,17 @@ class Lever {
 
     setState(state) {
         this.state = state;
-        this.servo_ids.forEach(servo_id => {
-            MessageBus.send(`SVO:${this.board_id}|${servo_id}|350|${this.easingTypes[this.type]}|2000`);
+        if (this.board_id === null || this.board_id === undefined) return;
+        const boardSettings = JSON.parse(localStorage.getItem('servoSettings'))[this.board_id];
+        const servoSettings = boardSettings.filter(servo => this.servo_ids.includes(servo.servo_id));
+        servoSettings.forEach(servo => {
+            MessageBus.send(
+                this.board_id,
+                servo.servo_id,
+                state ? servo.on_position : servo.off_position,
+                parseInt(servo.easing_type),
+                servo.duration
+            );
         })
     }
 }
