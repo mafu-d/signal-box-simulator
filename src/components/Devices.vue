@@ -20,7 +20,7 @@ watch(() => MessageBus.messages, (messages) => {
         // Send latest message to this device
         console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`)
     });
-});
+}, { deep: true });
 
 const deviceDialogRef = ref(null);
 const activeDeviceSettingsId = ref(null);
