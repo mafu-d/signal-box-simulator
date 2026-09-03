@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import Lever from "./Lever.vue";
-import Arduino from "./Arduino.vue";
+// import Arduino from "./Arduino.vue";
 
 const props = defineProps({
   diagramUrl: {
@@ -156,25 +156,16 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
 <template>
   <div class="signal-box">
     <img :src="diagramUrl" alt="Diagram" class="diagram" />
-    <div class="audio-controls">
-      <h2>Serial connect</h2>
-      <!-- <button v-if="port" @click="disconnectFromArduino">Disconnect</button>
+    <!-- <div class="audio-controls"> -->
+    <!-- <h2>Serial connect</h2> -->
+    <!-- <button v-if="port" @click="disconnectFromArduino">Disconnect</button>
       <button v-else @click="connectToArduino">Connect</button> -->
-      <Arduino :levers="levers" />
-    </div>
+    <!-- <Arduino :levers="levers" /> -->
+    <!-- </div> -->
     <div class="frame">
-      <Lever
-        v-for="lever in levers"
-        :key="lever.id"
-        :id="lever.id"
-        :label="lever.label"
-        :type="lever.type"
-        :state="lever.state"
-        :unlockedBy="lever.unlockedBy"
-        :unlocked="lever.unlocked"
-        :is-muted="isMuted"
-        @changeState="stateChanged"
-      />
+      <Lever v-for="lever in levers" :key="lever.id" :id="lever.id" :label="lever.label" :type="lever.type"
+        :state="lever.state" :unlockedBy="lever.unlockedBy" :unlocked="lever.unlocked" :is-muted="isMuted"
+        @changeState="stateChanged" />
     </div>
   </div>
 </template>
@@ -182,9 +173,11 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
 <style scoped>
 .signal-box {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 40vh 40vh;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
 }
 
 .frame {
@@ -193,14 +186,15 @@ const emit = defineEmits(["arrow-left", "arrow-right"]);
   gap: 1px;
   justify-content: center;
 
-  > * {
+  >* {
     flex: 1;
     max-width: 7vw;
   }
 }
 
 .diagram {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 35vh;
+  margin: 0 auto;
 }
 </style>

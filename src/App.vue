@@ -2,6 +2,7 @@
 import Frontington from "./components/Frontington.vue";
 import { onMounted, ref } from "vue";
 import Tutherside from "./components/Tutherside.vue";
+import Devices from "./components/Devices.vue";
 
 const activeTab = ref(0);
 
@@ -23,39 +24,22 @@ const selectNext = () => {
 
 <template>
   <div class="signal-box">
-    <div
-      class="switcher"
-      @keydown.left="selectPrevious"
-      @keydown.right="selectNext"
-    >
-      <button
-        v-for="(tab, index) in signalBoxes"
-        :key="index"
-        :class="{ active: activeTab === index }"
-        @click="activeTab = index"
-      >
-        {{ tab }}
-      </button>
-    </div>
-    <Tutherside
-      :is-active="activeTab === 0"
-      @arrow-left="selectPrevious"
-      @arrow-right="selectNext"
-    />
-    <Frontington
-      :is-active="activeTab === 1"
-      @arrow-left="selectPrevious"
-      @arrow-right="selectNext"
-    />
+    <header>
+      <div class="switcher" @keydown.left="selectPrevious" @keydown.right="selectNext">
+        <button v-for="(tab, index) in signalBoxes" :key="index" :class="{ active: activeTab === index }"
+          @click="activeTab = index">
+          {{ tab }}
+        </button>
+      </div>
+      <Devices />
+    </header>
+    <Tutherside :is-active="activeTab === 0" @arrow-left="selectPrevious" @arrow-right="selectNext" />
+    <Frontington :is-active="activeTab === 1" @arrow-left="selectPrevious" @arrow-right="selectNext" />
     <footer>
       <div>
-        <span
-          >&copy; Matthew Dawkins 2022 - {{ new Date().getFullYear() }}. All
-          rights reserved.</span
-        >
-        <a href="https://github.com/mafu-d/signal-box-simulator" target="_blank"
-          >Github</a
-        >
+        <span>&copy; Matthew Dawkins 2022 - {{ new Date().getFullYear() }}. All
+          rights reserved.</span>
+        <a href="https://github.com/mafu-d/signal-box-simulator" target="_blank">Github</a>
       </div>
     </footer>
   </div>
@@ -75,16 +59,24 @@ body {
   line-height: 1;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .switcher {
   padding: 0 3rem;
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
+
 .switcher button {
   font: inherit;
   font-size: 1.5rem;
   padding: 0.5rem 3rem;
+
   &.active {
     background: gray;
   }
@@ -98,7 +90,8 @@ footer {
   display: flex;
   justify-content: space-between;
 }
-footer > div {
+
+footer>div {
   display: flex;
   gap: 1rem;
 }
