@@ -1,13 +1,6 @@
 <template>
-  <div
-    class="lever"
-    :data-type="type"
-    :data-reversed="state"
-    @click="changeState"
-    :title="`Keypress: ${
-      id === 11 ? 'Shift + 1' : id < 10 ? id : '1 + ' + Math.floor(id % 10)
-    }`"
-  >
+  <div class="lever" :data-type="type" :data-reversed="state" @click="changeState" :title="`Keypress: ${id === 11 ? 'Shift + 1' : id < 10 ? id : '1 + ' + Math.floor(id % 10)
+    }`">
     <div class="lever__number">
       {{ id }}
     </div>
@@ -28,14 +21,7 @@
       </div>
     </div>
     <div class="lever__switch">
-      <input
-        type="range"
-        min="0"
-        max="1"
-        step="1"
-        :value="state ? 1 : 0"
-        :disabled="!unlocked"
-      />
+      <input type="range" min="0" max="1" step="1" :value="state ? 1 : 0" :disabled="!unlocked" />
     </div>
     <audio src="lever.mp3" ref="leverSound" :volume="isMuted ? 0 : 0.5"></audio>
   </div>
@@ -140,7 +126,7 @@ export default {
       display: block;
     }
 
-    span + span {
+    span+span {
       border-top: 1px solid white;
       margin-top: 0.5rem;
       padding-top: 0.5rem;
@@ -157,7 +143,7 @@ export default {
     margin-top: 1rem;
   }
 
-  &__unlocked-by + &__locked-by::before {
+  &__unlocked-by+&__locked-by::before {
     border-top: 1px solid rgb(255 255 255 / 0.5);
     padding-top: 1rem;
   }
@@ -176,7 +162,7 @@ export default {
     gap: 0.5rem;
 
     span {
-      & + & {
+      &+& {
         padding-left: 1rem;
       }
 
@@ -184,6 +170,7 @@ export default {
         &::before {
           content: "(";
         }
+
         &::after {
           content: ")";
         }
@@ -193,7 +180,8 @@ export default {
 
   &__switch {
     input {
-      appearance: slider-vertical;
+      writing-mode: vertical-lr;
+      direction: rtl;
       transform: rotate(180deg);
       width: 2rem;
       height: 3rem;
