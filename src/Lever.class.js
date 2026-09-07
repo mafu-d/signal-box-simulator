@@ -21,7 +21,7 @@ class Lever {
         this.state = state;
         if (this.board_id === null || this.board_id === undefined) return;
         const boardSettings = JSON.parse(localStorage.getItem('servoSettings'))[this.board_id];
-        const servoSettings = boardSettings.filter(servo => this.servo_ids.includes(servo.servo_id));
+        const servoSettings = boardSettings.filter(servo => this.id === servo.lever_id);
         servoSettings.forEach(servo => {
             MessageBus.send(
                 this.board_id,

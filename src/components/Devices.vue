@@ -80,9 +80,13 @@ const disconnectDevice = (id) => {
 }
 
 watch(() => MessageBus.messages, (messages) => {
-    devices.value.forEach(device => {
+    devices.value.forEach(async (device) => {
         // Send latest message to this device
-        console.log(`TODO: Sending message to device ${device.id}: ${messages.slice(-1)}`)
+        console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`);
+        const writer = device.port.writable.getWriter();
+        const data = new TextEncoder().encode(`${messages.slice(-1)}\n`);
+        await writer.write(data);
+        writer.releaseLock();
     });
 }, { deep: true });
 
@@ -142,8 +146,8 @@ watch(() => servoSettings.value, () => {
     </ul>
     <dialog ref="deviceDialogRef">
         <h2>Edit settings for device {{ activeDeviceSettingsId }} :
-            <span v-if="activeDeviceSettingsId === 0">Frontington</span>
-            <span v-if="activeDeviceSettingsId === 1">Tutherside</span>
+            <span v-if="activeDeviceSettingsId === 0">Tutherside</span>
+            <span v-if="activeDeviceSettingsId === 1">Frontington</span>
         </h2>
         <table v-if="activeDeviceSettingsId !== null">
             <thead>
