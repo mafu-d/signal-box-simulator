@@ -136,6 +136,10 @@ onMounted(() => {
 watch(() => servoSettings.value, () => {
     localStorage.setItem('servoSettings', JSON.stringify(servoSettings.value));
 }, { deep: true });
+
+const previewServoPosition = (deviceId, servoId, position) => {
+    MessageBus.send(deviceId, servoId, position || event.target.value, 1, 200);
+}
 </script>
 
 <template>
@@ -169,14 +173,20 @@ watch(() => servoSettings.value, () => {
                 <tr v-for="i in 16">
                     <td>{{ i - 1 }}</td>
                     <td>
-                        <input type="number" min="0" v-model="servoSettings[activeDeviceSettingsId][i - 1].lever_id">
+                        <input type="number" min="0" @focus="previewServoPosition(activeDeviceSettingsId, i - 1, 300)"
+                            @change="previewServoPosition(activeDeviceSettingsId, i - 1, 300)"
+                            v-model="servoSettings[activeDeviceSettingsId][i - 1].lever_id">
                     </td>
                     <td>
                         <input type="number" min="80" max="550" step="10"
+                            @change="previewServoPosition(activeDeviceSettingsId, i - 1, servoSettings[activeDeviceSettingsId][i - 1].off_position)"
+                            @focus="previewServoPosition(activeDeviceSettingsId, i - 1, servoSettings[activeDeviceSettingsId][i - 1].off_position)"
                             v-model="servoSettings[activeDeviceSettingsId][i - 1].off_position">
                     </td>
                     <td>
                         <input type="number" min="80" max="550" step="10"
+                            @change="previewServoPosition(activeDeviceSettingsId, i - 1, servoSettings[activeDeviceSettingsId][i - 1].on_position)"
+                            @focus="previewServoPosition(activeDeviceSettingsId, i - 1, servoSettings[activeDeviceSettingsId][i - 1].on_position)"
                             v-model="servoSettings[activeDeviceSettingsId][i - 1].on_position">
                     </td>
                     <td>
