@@ -4,21 +4,85 @@ import { MessageBus } from '../MessageBus';
 
 const devices = ref([]);
 
-const connectNewDevice = () => {
-    devices.value.push({
-        // This will ultimately be set by the message returning from the device identifying itself
-        id: devices.value.length,
-    });
+const connectNewDevice = async () => {
+    const device = { id: "unknown" };
+    // Request access to serial port
+    try {
+        device.port = await navigator.serial.requestPort();
+        await device.port.open({ baudRate: 9600 });
+        // Wait for device to become ready (Arduino reboots after connecting)
+        setTimeout(async () => {
+            // Get the device ID
+            device.id = await getDeviceId(device.port);
+            devices.value.push(device);
+        }, 2000);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const getDeviceId = async (port) => {
+    let id = null;
+    let reader = null;
+    let timeoutId = null;
+
+    try {
+        if (!port) {
+            console.error('Port not open');
+            return null;
+        }
+
+        // Request the board's ID
+        const writer = port.writable.getWriter();
+        const data = new TextEncoder().encode("REQID\n");
+        await writer.write(data);
+        writer.releaseLock();
+
+        // Wait for response
+        reader = port.readable.getReader();
+        timeoutId = setTimeout(() => {
+            console.error('Connection timeout reached');
+            reader.cancel();
+        }, 10000);
+
+        while (id === null) {
+            const { value, done } = await reader.read();
+            if (done) {
+                break;
+            }
+            if (value) {
+                console.log('Reply received.')
+                const text = new TextDecoder().decode(value).trim();
+                const idMatch = text.match(/^ID:([0-9]+)/);
+                if (idMatch) {
+                    id = parseInt(idMatch[1]);
+                    console.log(`This is board ${id}.`);
+                }
+            }
+        }
+    } catch (error) {
+        console.error({ error });
+        port.close();
+    } finally {
+        clearTimeout(timeoutId);
+        if (reader) {
+            reader.releaseLock();
+        }
+        console.log('Finished pairing.');
+    }
+
+    return id;
 }
 
 const disconnectDevice = (id) => {
+    devices.value.find(d => d.id === id).port.close();
     devices.value = devices.value.filter(i => i.id !== id);
 }
 
 watch(() => MessageBus.messages, (messages) => {
     devices.value.forEach(device => {
         // Send latest message to this device
-        console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`)
+        console.log(`TODO: Sending message to device ${device.id}: ${messages.slice(-1)}`)
     });
 }, { deep: true });
 
