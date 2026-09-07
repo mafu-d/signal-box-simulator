@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, useTemplateRef, watch } from 'vue';
+import { computed, onMounted, ref, useTemplateRef, watch } from 'vue';
 import { MessageBus } from '../MessageBus';
 
 const devices = ref([]);
@@ -81,13 +81,18 @@ const disconnectDevice = (id) => {
 
 watch(() => MessageBus.messages, (messages) => {
     devices.value.forEach(async (device) => {
-        // Send latest message to this device
-        console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`);
         const writer = device.port.writable.getWriter();
-        const data = new TextEncoder().encode(`${messages.slice(-1)}\n`);
-        await writer.write(data);
+        messages.forEach(async (message, index) => {
+            // Send latest message to this device
+            console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`);
+            const data = new TextEncoder().encode(`${messages.slice(-1)}\n`);
+            await writer.write(data);
+        });
         writer.releaseLock();
     });
+    if (MessageBus.messages.length) {
+        MessageBus.clear();
+    }
 }, { deep: true });
 
 const deviceDialogRef = ref(null);
