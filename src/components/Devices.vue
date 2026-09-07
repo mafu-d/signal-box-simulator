@@ -84,8 +84,8 @@ watch(() => MessageBus.messages, (messages) => {
         const writer = device.port.writable.getWriter();
         messages.forEach(async (message, index) => {
             // Send latest message to this device
-            console.log(`Sending message to device ${device.id}: ${messages.slice(-1)}`);
-            const data = new TextEncoder().encode(`${messages.slice(-1)}\n`);
+            console.log(`Sending message to device ${device.id}: ${message}`);
+            const data = new TextEncoder().encode(`${message}\n`);
             await writer.write(data);
         });
         writer.releaseLock();

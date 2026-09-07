@@ -1,7 +1,7 @@
 import { MessageBus } from "./MessageBus";
 
 class Lever {
-    constructor(id, label, type, on, off, board_id, servo_ids) {
+    constructor(id, label, type, on, off, board_id) {
         this.id = id;
         this.label = label;
         this.type = type;
@@ -9,7 +9,7 @@ class Lever {
         this.state = false;
         this.unlocked = Object.values(this.unlockedBy).filter(Boolean).length > 0;
         this.board_id = null || board_id;
-        this.servo_ids = servo_ids || [];
+        // this.servo_ids = servo_ids || [];
     }
 
     easingTypes = {
@@ -42,8 +42,8 @@ const combineConstraints = (on, off) => {
 }
 
 export class Signal extends Lever {
-    constructor(id, label, on, off, board_id, servo_ids) {
-        super(id, label, "signal", on, off, board_id, servo_ids);
+    constructor(id, label, on, off, board_id) {
+        super(id, label, "signal", on, off, board_id);
     }
 }
 
@@ -54,7 +54,7 @@ export class FacingPointLock extends Lever {
 }
 
 export class Point extends Lever {
-    constructor(id, label, on, off, board_id, servo_ids) {
-        super(id, label, "point", on, off, board_id, servo_ids);
+    constructor(id, label, on, off, board_id) {
+        super(id, label, "point", on, off, board_id);
     }
 }
