@@ -149,7 +149,7 @@ watch(() => servoSettings.value, () => {
             <button @click="connectNewDevice">+</button>
         </li>
     </ul>
-    <dialog ref="deviceDialogRef">
+    <dialog ref="deviceDialogRef" @keyup.stop>
         <h2>Edit settings for device {{ activeDeviceSettingsId }} :
             <span v-if="activeDeviceSettingsId === 0">Tutherside</span>
             <span v-if="activeDeviceSettingsId === 1">Frontington</span>
