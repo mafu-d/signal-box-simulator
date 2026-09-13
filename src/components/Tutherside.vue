@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import SignalBox from "./SignalBox.vue";
 import { Signal, FacingPointLock, Point } from "../Lever.class.js";
+import Diagram from "../images/Tutherside Signal Box Plan v2.png";
 
 defineProps({
   isActive: {
@@ -35,6 +36,5 @@ const levers = ref([
 </script>
 
 <template>
-  <SignalBox v-show="isActive" :is-active="isActive" v-model="levers"
-    diagram-url="/Tutherside Signal Box Plan v2.svg" />
+  <SignalBox v-show="isActive" :is-active="isActive" v-model="levers" :diagram-url="Diagram" />
 </template>
