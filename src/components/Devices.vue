@@ -69,9 +69,20 @@ const getDeviceId = async (port) => {
             reader.releaseLock();
         }
         console.log('Finished pairing.');
+
+        // After connection, set initial value for all servos
+        setTimeout(() => {
+            resetServoPositions(id);
+        }, 500);
     }
 
     return id;
+}
+
+const resetServoPositions = (board_id) => {
+    servoSettings.value[board_id].forEach(lever => {
+        MessageBus.send(board_id, lever.servo_id, lever.off_position, 1, 200);
+    });
 }
 
 const disconnectDevice = (id) => {
@@ -167,7 +178,7 @@ const previewServoPosition = (deviceId, servoId, position) => {
             </button>
         </li>
     </ul>
-    <dialog ref="deviceDialogRef" @keyup.stop>
+    <dialog ref="deviceDialogRef" @keyup.stop @close="resetServoPositions(activeDeviceSettingsId)">
         <h2>Edit settings for device {{ activeDeviceSettingsId }} :
             <span v-if="activeDeviceSettingsId === 0">Tutherside</span>
             <span v-if="activeDeviceSettingsId === 1">Frontington</span>
