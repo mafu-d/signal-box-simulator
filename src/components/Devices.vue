@@ -14,7 +14,9 @@ const connectNewDevice = async () => {
         setTimeout(async () => {
             // Get the device ID
             device.id = await getDeviceId(device.port);
-            devices.value.push(device);
+            if (device.id !== null) {
+                devices.value.push(device);
+            }
         }, 2000);
     } catch (error) {
         console.error(error);
@@ -45,18 +47,29 @@ const getDeviceId = async (port) => {
             reader.cancel();
         }, 10000);
 
+        const decoder = new TextDecoder();
+        let buffer = '';
+
         while (id === null) {
             const { value, done } = await reader.read();
             if (done) {
                 break;
             }
             if (value) {
-                console.log('Reply received.')
-                const text = new TextDecoder().decode(value).trim();
-                const idMatch = text.match(/^ID:([0-9]+)/);
-                if (idMatch) {
-                    id = parseInt(idMatch[1]);
-                    console.log(`This is board ${id}.`);
+                // Chunks can split a line anywhere, so accumulate them
+                buffer += decoder.decode(value, { stream: true });
+
+                // Only look at complete lines
+                const lines = buffer.split('\n');
+                buffer = lines.pop(); // keep any incomplete trailing line
+
+                for (const line of lines) {
+                    const idMatch = line.trim().match(/^ID:([0-9]+)$/);
+                    if (idMatch) {
+                        id = parseInt(idMatch[1]);
+                        console.log(`This is board ${id}.`);
+                        break;
+                    }
                 }
             }
         }
@@ -74,9 +87,10 @@ const getDeviceId = async (port) => {
         setTimeout(() => {
             resetServoPositions(id);
         }, 500);
+        return id;
     }
 
-    return id;
+    return null;
 }
 
 const resetServoPositions = (board_id) => {
